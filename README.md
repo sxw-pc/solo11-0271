@@ -10,3 +10,8 @@
 
 三个独立命令：`python -m draincourt termination --db state.sqlite --fixture fixtures/termination_normal.json`, `python -m draincourt connection --db state.sqlite --fixture fixtures/connection_normal.json`, `python -m draincourt shutdown --db state.sqlite --fixture fixtures/shutdown_normal.json`。
 回放 `python -m draincourt replay --db state.sqlite`；测试 `python -m unittest discover -s tests -v`。
+
+An offline configuration mount models published generations, current-path reads, and
+reads relative to an already-read descriptor. A workload loader records the command
+and routing pair it actually configured. This model does not execute hook commands.
+Run `python -m draincourt projection --db config.sqlite --fixture fixtures/projection_rotation.json`.

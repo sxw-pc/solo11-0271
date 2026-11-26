@@ -1,0 +1,136 @@
+[
+  {
+    "command": "projection",
+    "input": {
+      "op": "stage",
+      "id": "g1",
+      "event_id": "g1",
+      "at": 1,
+      "rank": 1,
+      "files": {
+        "command": "flush-v1",
+        "routing": "route-A"
+      }
+    }
+  },
+  {
+    "command": "projection",
+    "input": {
+      "op": "stage",
+      "id": "g2",
+      "event_id": "g2",
+      "at": 2,
+      "rank": 2,
+      "files": {
+        "command": "flush-v2",
+        "routing": "route-B"
+      }
+    }
+  },
+  {
+    "command": "projection",
+    "input": {
+      "op": "stage",
+      "id": "g3",
+      "event_id": "g3",
+      "at": 3,
+      "rank": 3,
+      "files": {
+        "command": "flush-v1",
+        "routing": "route-C"
+      }
+    }
+  },
+  {
+    "command": "projection",
+    "input": {
+      "op": "publish",
+      "id": "publish-1",
+      "event_id": "publish-1",
+      "at": 10,
+      "generation": "g1"
+    }
+  },
+  {
+    "command": "projection",
+    "input": {
+      "op": "read",
+      "id": "command-before",
+      "event_id": "command-before",
+      "at": 11,
+      "file": "command"
+    }
+  },
+  {
+    "command": "projection",
+    "input": {
+      "op": "publish",
+      "id": "publish-2",
+      "event_id": "publish-2",
+      "at": 12,
+      "generation": "g2"
+    }
+  },
+  {
+    "command": "projection",
+    "input": {
+      "op": "read",
+      "id": "routing-middle",
+      "event_id": "routing-middle",
+      "at": 13,
+      "file": "routing"
+    }
+  },
+  {
+    "command": "projection",
+    "input": {
+      "op": "publish",
+      "id": "publish-3",
+      "event_id": "publish-3",
+      "at": 14,
+      "generation": "g3"
+    }
+  },
+  {
+    "command": "projection",
+    "input": {
+      "op": "read",
+      "id": "command-after",
+      "event_id": "command-after",
+      "at": 15,
+      "file": "command"
+    }
+  },
+  {
+    "command": "projection",
+    "input": {
+      "op": "read",
+      "id": "routing-after",
+      "event_id": "routing-after",
+      "at": 15,
+      "file": "routing"
+    }
+  },
+  {
+    "command": "projection",
+    "input": {
+      "op": "read",
+      "id": "routing-pinned",
+      "event_id": "routing-pinned",
+      "at": 15,
+      "file": "routing",
+      "relative_to": "command-before"
+    }
+  },
+  {
+    "command": "hookconfig",
+    "input": {
+      "op": "load",
+      "id": "naive-hook",
+      "event_id": "naive-hook",
+      "at": 15,
+      "command_read": "command-before",
+      "routing_read": "routing-middle"
+    }
+  }
+]
