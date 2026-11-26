@@ -1,0 +1,127 @@
+[
+  {
+    "command": "tracevalues",
+    "input": {
+      "op": "value",
+      "event_id": "private-a",
+      "id": "private-a",
+      "incident": "one",
+      "classification": "private",
+      "text": "RID-π-732"
+    }
+  },
+  {
+    "command": "tracevalues",
+    "input": {
+      "op": "value",
+      "event_id": "private-b",
+      "id": "private-b",
+      "incident": "one",
+      "classification": "private",
+      "text": "RID-π-732"
+    }
+  },
+  {
+    "command": "tracevalues",
+    "input": {
+      "op": "value",
+      "event_id": "public-label",
+      "id": "public-label",
+      "incident": "one",
+      "classification": "public",
+      "text": "RID-"
+    }
+  },
+  {
+    "command": "tracevalues",
+    "input": {
+      "op": "value",
+      "event_id": "private-other",
+      "id": "private-other",
+      "incident": "two",
+      "classification": "private",
+      "text": "RID-π-732"
+    }
+  },
+  {
+    "command": "transcript",
+    "input": {
+      "op": "frame",
+      "event_id": "first",
+      "id": "first",
+      "incident": "one",
+      "recipe": [
+        {
+          "literal": "pod="
+        },
+        {
+          "ref": "private-a",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "literal": " phase=waiting tag="
+        },
+        {
+          "ref": "public-label",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "literal": " suffix="
+        },
+        {
+          "ref": "private-a",
+          "start": 4,
+          "end": 9
+        }
+      ]
+    }
+  },
+  {
+    "command": "transcript",
+    "input": {
+      "op": "frame",
+      "event_id": "second",
+      "id": "second",
+      "incident": "one",
+      "recipe": [
+        {
+          "literal": "done="
+        },
+        {
+          "ref": "private-a",
+          "start": 4,
+          "end": 9
+        },
+        {
+          "literal": " peer="
+        },
+        {
+          "ref": "private-b",
+          "start": 0,
+          "end": 9
+        }
+      ]
+    }
+  },
+  {
+    "command": "transcript",
+    "input": {
+      "op": "frame",
+      "event_id": "third",
+      "id": "third",
+      "incident": "two",
+      "recipe": [
+        {
+          "literal": "done="
+        },
+        {
+          "ref": "private-other",
+          "start": 0,
+          "end": 9
+        }
+      ]
+    }
+  }
+]

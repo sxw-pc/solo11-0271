@@ -10,3 +10,7 @@
 
 三个独立命令：`python -m draincourt termination --db state.sqlite --fixture fixtures/termination_normal.json`, `python -m draincourt connection --db state.sqlite --fixture fixtures/connection_normal.json`, `python -m draincourt shutdown --db state.sqlite --fixture fixtures/shutdown_normal.json`。
 回放 `python -m draincourt replay --db state.sqlite`；测试 `python -m unittest discover -s tests -v`。
+
+Local diagnostic frames are built from literals and slices of synthetic labelled
+values. The source recipe stays available independently of the rendered text.
+Run `python -m draincourt transcript --db trace.sqlite --fixture fixtures/transcript_fragments.json`.
