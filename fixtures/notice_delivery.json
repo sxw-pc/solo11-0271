@@ -1,0 +1,202 @@
+[
+  {
+    "command": "termination",
+    "input": {
+      "event_id": "request",
+      "op": "termination-request",
+      "id": "request",
+      "pod": "pod-a",
+      "uid": "u1",
+      "generation": 1,
+      "at": 10
+    }
+  },
+  {
+    "command": "termination",
+    "input": {
+      "event_id": "grace",
+      "op": "grace-bind",
+      "id": "grace",
+      "request": "request",
+      "expires": 40,
+      "level": "critical"
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "conn-open",
+      "op": "connection-event",
+      "id": "conn-open",
+      "request": "request",
+      "uid": "u1",
+      "connection": "c1",
+      "kind": "open",
+      "at": 11
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "endpoint",
+      "op": "endpoint-remove",
+      "request": "request",
+      "uid": "u1",
+      "at": 12
+    }
+  },
+  {
+    "command": "termination",
+    "input": {
+      "event_id": "hook",
+      "op": "hook-ack",
+      "id": "hook",
+      "request": "request",
+      "uid": "u1",
+      "generation": 1,
+      "at": 13
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "check-wait",
+      "op": "drain-check",
+      "id": "check-wait",
+      "request": "request",
+      "at": 14
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "conn-close",
+      "op": "connection-event",
+      "id": "conn-close",
+      "request": "request",
+      "uid": "u1",
+      "connection": "c1",
+      "kind": "close",
+      "at": 15
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "check-done",
+      "op": "drain-check",
+      "id": "check-done",
+      "request": "request",
+      "at": 16
+    }
+  },
+  {
+    "command": "notice",
+    "input": {
+      "op": "enqueue",
+      "id": "warning",
+      "event_id": "warning",
+      "at": 14,
+      "request": "request",
+      "receiver": "ops",
+      "evidence": "check-wait"
+    }
+  },
+  {
+    "command": "notice",
+    "input": {
+      "op": "send",
+      "id": "warning-first",
+      "event_id": "warning-first",
+      "at": 15,
+      "message": "warning"
+    }
+  },
+  {
+    "command": "notice",
+    "input": {
+      "op": "send",
+      "id": "warning-retry",
+      "event_id": "warning-retry",
+      "at": 16,
+      "message": "warning"
+    }
+  },
+  {
+    "command": "notice",
+    "input": {
+      "op": "enqueue",
+      "id": "healthy",
+      "event_id": "healthy",
+      "at": 16,
+      "request": "request",
+      "receiver": "ops",
+      "evidence": "check-done"
+    }
+  },
+  {
+    "command": "notice",
+    "input": {
+      "op": "send",
+      "id": "sent-healthy",
+      "event_id": "sent-healthy",
+      "at": 17,
+      "message": "healthy"
+    }
+  },
+  {
+    "command": "notice",
+    "input": {
+      "op": "deliver",
+      "id": "delivered-healthy",
+      "event_id": "delivered-healthy",
+      "at": 17,
+      "attempt": "sent-healthy",
+      "receiver": "ops"
+    }
+  },
+  {
+    "command": "notice",
+    "input": {
+      "op": "deliver",
+      "id": "delivered-retry",
+      "event_id": "delivered-retry",
+      "at": 18,
+      "attempt": "warning-retry",
+      "receiver": "ops"
+    }
+  },
+  {
+    "command": "notice",
+    "input": {
+      "op": "ack",
+      "id": "ack-retry",
+      "event_id": "ack-retry",
+      "at": 18,
+      "attempt": "warning-retry",
+      "receiver": "ops"
+    }
+  },
+  {
+    "command": "notice",
+    "input": {
+      "op": "deliver",
+      "id": "delivered-first",
+      "event_id": "delivered-first",
+      "at": 19,
+      "attempt": "warning-first",
+      "receiver": "ops"
+    }
+  },
+  {
+    "command": "notice",
+    "input": {
+      "op": "ack",
+      "id": "ack-first",
+      "event_id": "ack-first",
+      "at": 20,
+      "attempt": "warning-first",
+      "receiver": "ops"
+    }
+  }
+]
