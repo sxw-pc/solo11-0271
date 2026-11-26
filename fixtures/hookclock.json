@@ -1,0 +1,142 @@
+[
+  {
+    "command": "termination",
+    "input": {
+      "event_id": "request",
+      "op": "termination-request",
+      "id": "request",
+      "pod": "pod-a",
+      "uid": "u1",
+      "generation": 1,
+      "at": 10
+    }
+  },
+  {
+    "command": "termination",
+    "input": {
+      "event_id": "grace",
+      "op": "grace-bind",
+      "id": "grace",
+      "request": "request",
+      "expires": 40,
+      "level": "critical"
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "conn-open",
+      "op": "connection-event",
+      "id": "conn-open",
+      "request": "request",
+      "uid": "u1",
+      "connection": "c1",
+      "kind": "open",
+      "at": 11
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "endpoint",
+      "op": "endpoint-remove",
+      "request": "request",
+      "uid": "u1",
+      "at": 12
+    }
+  },
+  {
+    "command": "hookclock",
+    "input": {
+      "op": "stage-start",
+      "id": "flush",
+      "event_id": "flush",
+      "at": 14,
+      "routes": [
+        "primary",
+        "mirror"
+      ],
+      "request": "request",
+      "uid": "u1",
+      "generation": 1
+    }
+  },
+  {
+    "command": "hookclock",
+    "input": {
+      "op": "delegate",
+      "id": "activate-mirror",
+      "event_id": "activate-mirror",
+      "at": 18,
+      "stage": "flush",
+      "route": "mirror",
+      "request": "request",
+      "uid": "u1",
+      "generation": 1
+    }
+  },
+  {
+    "command": "hookclock",
+    "input": {
+      "op": "hold",
+      "id": "primary-maintenance",
+      "event_id": "primary-maintenance",
+      "at": 26,
+      "route": "primary",
+      "start": 16,
+      "end": 26,
+      "kind": "maintenance"
+    }
+  },
+  {
+    "command": "hookclock",
+    "input": {
+      "op": "hold",
+      "id": "mirror-maintenance",
+      "event_id": "mirror-maintenance",
+      "at": 28,
+      "route": "mirror",
+      "start": 21,
+      "end": 28,
+      "kind": "maintenance"
+    }
+  },
+  {
+    "command": "hookclock",
+    "input": {
+      "op": "hold",
+      "id": "overlap-duplicate",
+      "event_id": "overlap-duplicate",
+      "at": 25,
+      "route": "mirror",
+      "start": 21,
+      "end": 25,
+      "kind": "maintenance"
+    }
+  },
+  {
+    "command": "hookclock",
+    "input": {
+      "op": "hold",
+      "id": "application-stall",
+      "event_id": "application-stall",
+      "at": 30,
+      "route": "primary",
+      "start": 26,
+      "end": 30,
+      "kind": "workload"
+    }
+  },
+  {
+    "command": "termination",
+    "input": {
+      "event_id": "hook",
+      "op": "hook-ack",
+      "id": "hook",
+      "request": "request",
+      "uid": "u1",
+      "generation": 1,
+      "at": 25
+    }
+  }
+]

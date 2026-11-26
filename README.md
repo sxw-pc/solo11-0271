@@ -10,3 +10,7 @@
 
 三个独立命令：`python -m draincourt termination --db state.sqlite --fixture fixtures/termination_normal.json`, `python -m draincourt connection --db state.sqlite --fixture fixtures/connection_normal.json`, `python -m draincourt shutdown --db state.sqlite --fixture fixtures/shutdown_normal.json`。
 回放 `python -m draincourt replay --db state.sqlite`；测试 `python -m unittest discover -s tests -v`。
+
+The offline hookclock feed records activation of delegated preStop routes and
+observed, closed maintenance holds separately from ordinary workload stalls.
+Run `python -m draincourt hookclock --db hookclock.sqlite --fixture fixtures/hookclock.json`.
