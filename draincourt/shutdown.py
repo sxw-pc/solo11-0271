@@ -14,13 +14,14 @@ def handle(db,x):
         if existing:return {'decision':'shutdown_already_issued','order':existing['id']}
         drained=one(db,"SELECT * FROM drain_cases WHERE request=? AND status='drained' ORDER BY at DESC LIMIT 1",(r['id'],))
         hook=one(db,'SELECT * FROM hook_receipts WHERE request=?',(r['id'],))
-        safe=drained and hook and not active(db,r['id']) and x['at']<grace['expires']
-        forced=x['at']>=grace['expires']
+        endpoint=one(db,'SELECT * FROM endpoint_states WHERE request=?',(r['id'],))
+        safe=drained and hook and endpoint and endpoint['at']<=drained['at']<=x['at'] and hook['at']<=x['at'] and not active(db,r['id'],x['at']) and r['at']<=x['at']<grace['expires']
+        forced=x['at']>=grace['expires'] and x['at']>=r['at']
         if not safe and not forced:return {'decision':'shutdown_waiting'}
         mode='safe' if safe else 'forced'
         db.execute('INSERT INTO shutdown_orders VALUES(?,?,?,?,?,?)',(x['id'],r['id'],r['uid'],x['at'],mode,'issued'))
-        if forced:db.execute('INSERT INTO loss_records VALUES(?,?,?,?,?)',(x['loss_id'],r['id'],len(active(db,r['id'])),x['at'],'grace_expired'))
-        return {'decision':'shutdown_safe' if safe else 'shutdown_forced','connections':len(active(db,r['id']))}
+        if forced:db.execute('INSERT INTO loss_records VALUES(?,?,?,?,?)',(x['loss_id'],r['id'],len(active(db,r['id'],x['at'])),x['at'],'grace_expired'))
+        return {'decision':'shutdown_safe' if safe else 'shutdown_forced','connections':len(active(db,r['id'],x['at']))}
     if x['op']=='exit-ack':
         o=one(db,'SELECT * FROM shutdown_orders WHERE id=?',(x['order'],))
         if not o or o['status']!='issued' or x['uid']!=o['uid'] or x['at']<o['at']:

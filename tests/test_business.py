@@ -53,5 +53,15 @@ class BusinessTests(unittest.TestCase):
         for event in events[:6]:run(self.db,event['command'],event['input'])
         self.assertEqual(run(self.db,'connection',{'event_id':'fake-close','op':'connection-event','id':'fake-close','request':'request','uid':'u1','connection':'not-c1','kind':'close','at':15})['decision'],'unknown_connection')
         self.assertEqual(run(self.db,'connection',{'event_id':'still-open','op':'drain-check','id':'still-open','request':'request','at':16})['decision'],'connections_remaining')
+    def test_future_hook_and_drain_cannot_authorize_past_shutdown(self):
+        events=json.loads((ROOT/'fixtures'/'path.json').read_text(encoding='utf-8'))
+        for event in events[:8]:run(self.db,event['command'],event['input'])
+        self.assertEqual(run(self.db,'shutdown',{'event_id':'past-shutdown','op':'shutdown','id':'past-shutdown','request':'request','uid':'u1','at':11})['decision'],'shutdown_waiting')
+        self.assertEqual(run(self.db,'connection',{'event_id':'past-check','op':'drain-check','id':'past-check','request':'request','at':11})['decision'],'drain_unproven')
+        self.assertEqual(one(self.db,'SELECT COUNT(*) n FROM shutdown_orders')['n'],0)
+    def test_endpoint_removal_cannot_predate_observed_connection(self):
+        events=json.loads((ROOT/'fixtures'/'path.json').read_text(encoding='utf-8'))
+        for event in events[:3]:run(self.db,event['command'],event['input'])
+        self.assertEqual(run(self.db,'connection',{'event_id':'retro-remove','op':'endpoint-remove','request':'request','uid':'u1','at':10})['decision'],'endpoint_denied')
 
 print('module_file',draincourt.__file__)
