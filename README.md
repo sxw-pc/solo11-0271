@@ -10,3 +10,7 @@
 
 三个独立命令：`python -m draincourt termination --db state.sqlite --fixture fixtures/termination_normal.json`, `python -m draincourt connection --db state.sqlite --fixture fixtures/connection_normal.json`, `python -m draincourt shutdown --db state.sqlite --fixture fixtures/shutdown_normal.json`。
 回放 `python -m draincourt replay --db state.sqlite`；测试 `python -m unittest discover -s tests -v`。
+
+Offline network inventory records historical address leases and independent flow
+sampler batches. Batches retain sampler phase and, when available, a translation token.
+Run `python -m draincourt flows --db flows.sqlite --fixture fixtures/address_reuse.json`.

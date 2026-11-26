@@ -1,0 +1,98 @@
+[
+  {
+    "command": "addresses",
+    "input": {
+      "id": "lease-old",
+      "event_id": "lease-old",
+      "op": "allocate",
+      "node": "n1",
+      "address": "192.0.2.3",
+      "pod": "gateway-old",
+      "owner": "team-a",
+      "at": 10
+    }
+  },
+  {
+    "command": "addresses",
+    "input": {
+      "id": "released",
+      "event_id": "released",
+      "op": "release",
+      "lease": "lease-old",
+      "owner": "team-a",
+      "at": 20
+    }
+  },
+  {
+    "command": "addresses",
+    "input": {
+      "id": "lease-new",
+      "event_id": "lease-new",
+      "op": "allocate",
+      "node": "n1",
+      "address": "192.0.2.3",
+      "pod": "gateway-new",
+      "owner": "team-b",
+      "at": 20
+    }
+  },
+  {
+    "command": "flows",
+    "input": {
+      "id": "pre",
+      "event_id": "pre",
+      "op": "observe",
+      "node": "n1",
+      "address": "192.0.2.3",
+      "phase": "pre-translation",
+      "start": 18,
+      "end": 20,
+      "bytes": 90,
+      "token": "nat-x"
+    }
+  },
+  {
+    "command": "flows",
+    "input": {
+      "id": "post",
+      "event_id": "post",
+      "op": "observe",
+      "node": "n1",
+      "address": "192.0.2.3",
+      "phase": "post-translation",
+      "start": 20,
+      "end": 22,
+      "bytes": 90,
+      "token": "nat-x"
+    }
+  },
+  {
+    "command": "flows",
+    "input": {
+      "id": "new",
+      "event_id": "new",
+      "op": "observe",
+      "node": "n1",
+      "address": "192.0.2.3",
+      "phase": "pre-translation",
+      "start": 21,
+      "end": 22,
+      "bytes": 40,
+      "token": "nat-y"
+    }
+  },
+  {
+    "command": "flows",
+    "input": {
+      "id": "crossing",
+      "event_id": "crossing",
+      "op": "observe",
+      "node": "n1",
+      "address": "192.0.2.3",
+      "phase": "post-translation",
+      "start": 19,
+      "end": 22,
+      "bytes": 10
+    }
+  }
+]
