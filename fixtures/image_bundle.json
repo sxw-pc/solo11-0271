@@ -1,0 +1,100 @@
+[
+  {
+    "command": "images",
+    "input": {
+      "event_id": "base-amd",
+      "op": "blob",
+      "digest": "sha256:e9cfb4b09e1d27a0cf989196318e7fb8b24f07d361cac69f41dd0999bd03a34a",
+      "diff_id": "sha256:740c3850283abbf03be6878627ee45e411530539c8c9f9cedf20c1345f3c31d8",
+      "encoding": "gzip",
+      "payload": "H4sIAAEAAAAC/8vJT07MUSgqzSvJzE1VSEosTlXISaxMLeICAPRx5q4ZAAAA"
+    }
+  },
+  {
+    "command": "images",
+    "input": {
+      "event_id": "base-arm",
+      "op": "blob",
+      "digest": "sha256:2a7cfbaea91cf5f2084b45fc473ac049821a1444e12edf4290f01c1574c72993",
+      "diff_id": "sha256:740c3850283abbf03be6878627ee45e411530539c8c9f9cedf20c1345f3c31d8",
+      "encoding": "gzip",
+      "payload": "H4sIAAIAAAAC/8vJT07MUSgqzSvJzE1VSEosTlXISaxMLeICAPRx5q4ZAAAA"
+    }
+  },
+  {
+    "command": "images",
+    "input": {
+      "event_id": "amd-app",
+      "op": "blob",
+      "digest": "sha256:59e929af8c0959d7b1f768510f35d9e6115fdbe4e201f9c44b1856b61920a499",
+      "diff_id": "sha256:09e743564736ae398a9d07c0645917467130ece57dc4a6d62ff95a513a06a3cf",
+      "encoding": "gzip",
+      "payload": "H4sIAAEAAAAC/8vJT07MUUjOzyspys/JSS1SyM9TSMxNMTPhAgBcTvPeGgAAAA=="
+    }
+  },
+  {
+    "command": "images",
+    "input": {
+      "event_id": "arm-app",
+      "op": "blob",
+      "digest": "sha256:0bee97e7e24c03307e0d8a4b1462938fefe4fd6071d45b2974240d8e1a19651f",
+      "diff_id": "sha256:025b4dcd939ccf57374983f5485cdd4faf18f41d023f1e676b4a957a10bae080",
+      "encoding": "gzip",
+      "payload": "H4sIAAEAAAAC/8vJT07MUUjOzyspys/JSS1SyM9TSCzKNTPhAgCFAUtBGgAAAA=="
+    }
+  },
+  {
+    "command": "images",
+    "input": {
+      "event_id": "manifest-amd64",
+      "op": "manifest",
+      "digest": "sha256:45b3967d3803581ba1bd206847de209d9274498e4dd1b18028ba259b1f034911",
+      "platform": "linux/amd64",
+      "layers": [
+        "sha256:e9cfb4b09e1d27a0cf989196318e7fb8b24f07d361cac69f41dd0999bd03a34a",
+        "sha256:59e929af8c0959d7b1f768510f35d9e6115fdbe4e201f9c44b1856b61920a499"
+      ],
+      "diff_ids": [
+        "sha256:740c3850283abbf03be6878627ee45e411530539c8c9f9cedf20c1345f3c31d8",
+        "sha256:09e743564736ae398a9d07c0645917467130ece57dc4a6d62ff95a513a06a3cf"
+      ]
+    }
+  },
+  {
+    "command": "nodeimage",
+    "input": {
+      "event_id": "install-amd64",
+      "op": "install",
+      "id": "install-amd64",
+      "manifest": "sha256:45b3967d3803581ba1bd206847de209d9274498e4dd1b18028ba259b1f034911",
+      "platform": "linux/amd64"
+    }
+  },
+  {
+    "command": "images",
+    "input": {
+      "event_id": "manifest-arm64",
+      "op": "manifest",
+      "digest": "sha256:668cfe75474a4f6853e1412c0f0c2df60d8a904c338a356af68c8c25d0b990a6",
+      "platform": "linux/arm64",
+      "layers": [
+        "sha256:2a7cfbaea91cf5f2084b45fc473ac049821a1444e12edf4290f01c1574c72993",
+        "sha256:0bee97e7e24c03307e0d8a4b1462938fefe4fd6071d45b2974240d8e1a19651f"
+      ],
+      "diff_ids": [
+        "sha256:740c3850283abbf03be6878627ee45e411530539c8c9f9cedf20c1345f3c31d8",
+        "sha256:025b4dcd939ccf57374983f5485cdd4faf18f41d023f1e676b4a957a10bae080"
+      ]
+    }
+  },
+  {
+    "command": "nodeimage",
+    "input": {
+      "event_id": "install-arm64",
+      "op": "install",
+      "id": "install-arm64",
+      "manifest": "sha256:668cfe75474a4f6853e1412c0f0c2df60d8a904c338a356af68c8c25d0b990a6",
+      "platform": "linux/arm64"
+    }
+  }
+]

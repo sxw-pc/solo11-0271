@@ -10,3 +10,8 @@
 
 三个独立命令：`python -m draincourt termination --db state.sqlite --fixture fixtures/termination_normal.json`, `python -m draincourt connection --db state.sqlite --fixture fixtures/connection_normal.json`, `python -m draincourt shutdown --db state.sqlite --fixture fixtures/shutdown_normal.json`。
 回放 `python -m draincourt replay --db state.sqlite`；测试 `python -m unittest discover -s tests -v`。
+
+The offline image registry stores digest-verified encoded layer bytes and ordered
+platform manifests for controller nodes. Installation resolves the encoded layer
+references and independently checks their decoded diff IDs. No registry is contacted.
+Run `python -m draincourt images --db images.sqlite --fixture fixtures/image_bundle.json`.
