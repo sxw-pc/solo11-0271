@@ -1,3 +1,11 @@
 *.sqlite
 __pycache__/
 *.pyc
+.venv/
+venv/
+node_modules/
+.pytest_cache/
+.coverage
+.benchmarks/
+.env
+dist/
