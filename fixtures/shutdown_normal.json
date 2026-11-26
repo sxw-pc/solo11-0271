@@ -1,0 +1,115 @@
+[
+  {
+    "command": "termination",
+    "input": {
+      "event_id": "request",
+      "op": "termination-request",
+      "id": "request",
+      "pod": "pod-a",
+      "uid": "u1",
+      "generation": 1,
+      "at": 10
+    }
+  },
+  {
+    "command": "termination",
+    "input": {
+      "event_id": "grace",
+      "op": "grace-bind",
+      "id": "grace",
+      "request": "request",
+      "expires": 40,
+      "level": "critical"
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "conn-open",
+      "op": "connection-event",
+      "id": "conn-open",
+      "request": "request",
+      "uid": "u1",
+      "connection": "c1",
+      "kind": "open",
+      "at": 11
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "endpoint",
+      "op": "endpoint-remove",
+      "request": "request",
+      "uid": "u1",
+      "at": 12
+    }
+  },
+  {
+    "command": "termination",
+    "input": {
+      "event_id": "hook",
+      "op": "hook-ack",
+      "id": "hook",
+      "request": "request",
+      "uid": "u1",
+      "generation": 1,
+      "at": 13
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "check-wait",
+      "op": "drain-check",
+      "id": "check-wait",
+      "request": "request",
+      "at": 14
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "conn-close",
+      "op": "connection-event",
+      "id": "conn-close",
+      "request": "request",
+      "uid": "u1",
+      "connection": "c1",
+      "kind": "close",
+      "at": 15
+    }
+  },
+  {
+    "command": "connection",
+    "input": {
+      "event_id": "check-done",
+      "op": "drain-check",
+      "id": "check-done",
+      "request": "request",
+      "at": 16
+    }
+  },
+  {
+    "command": "shutdown",
+    "input": {
+      "event_id": "shutdown",
+      "op": "shutdown",
+      "id": "shutdown",
+      "request": "request",
+      "uid": "u1",
+      "at": 17
+    }
+  },
+  {
+    "command": "shutdown",
+    "input": {
+      "event_id": "exit",
+      "op": "exit-ack",
+      "id": "exit",
+      "order": "shutdown",
+      "uid": "u1",
+      "at": 18
+    }
+  }
+]
