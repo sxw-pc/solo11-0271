@@ -1,0 +1,82 @@
+[
+  {
+    "command": "nodeclock",
+    "input": {
+      "op": "clock",
+      "id": "edge",
+      "event_id": "edge",
+      "lower": 0,
+      "upper": 12
+    }
+  },
+  {
+    "command": "nodeclock",
+    "input": {
+      "op": "clock",
+      "id": "relay",
+      "event_id": "relay",
+      "lower": 0,
+      "upper": 12
+    }
+  },
+  {
+    "command": "nodeclock",
+    "input": {
+      "op": "clock",
+      "id": "runtime",
+      "event_id": "runtime",
+      "lower": 0,
+      "upper": 12
+    }
+  },
+  {
+    "command": "nodeclock",
+    "input": {
+      "op": "exchange",
+      "id": "e-to-r",
+      "event_id": "e-to-r",
+      "sender": "edge",
+      "other": "relay",
+      "sent": 10,
+      "arrived": 8,
+      "max_delay": 3
+    }
+  },
+  {
+    "command": "nodeclock",
+    "input": {
+      "op": "exchange",
+      "id": "r-to-n",
+      "event_id": "r-to-n",
+      "sender": "relay",
+      "other": "runtime",
+      "sent": 20,
+      "arrived": 17,
+      "max_delay": 2
+    }
+  },
+  {
+    "command": "milestone",
+    "input": {
+      "op": "mark",
+      "id": "a",
+      "event_id": "a",
+      "incident": "node-drain",
+      "node": "edge",
+      "kind": "endpoint_stopped",
+      "tick": 34
+    }
+  },
+  {
+    "command": "milestone",
+    "input": {
+      "op": "mark",
+      "id": "b",
+      "event_id": "b",
+      "incident": "node-drain",
+      "node": "runtime",
+      "kind": "last_local_request",
+      "tick": 31
+    }
+  }
+]

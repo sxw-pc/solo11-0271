@@ -10,3 +10,7 @@
 
 三个独立命令：`python -m draincourt termination --db state.sqlite --fixture fixtures/termination_normal.json`, `python -m draincourt connection --db state.sqlite --fixture fixtures/connection_normal.json`, `python -m draincourt shutdown --db state.sqlite --fixture fixtures/shutdown_normal.json`。
 回放 `python -m draincourt replay --db state.sqlite`；测试 `python -m unittest discover -s tests -v`。
+
+The offline clock inventory keeps per-node clock-offset bounds and local observations
+of agent message exchanges. Milestones retain their original source and local time.
+Run `python -m draincourt nodeclock --db incident.sqlite --fixture fixtures/clock_incident.json`.
