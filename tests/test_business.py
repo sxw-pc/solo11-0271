@@ -46,6 +46,8 @@ class BusinessTests(unittest.TestCase):
         forced=run(self.db,'shutdown',{'event_id':'forced','op':'shutdown','id':'forced','request':'request','uid':'u1','at':40,'loss_id':'loss'})
         self.assertEqual(forced,{'decision':'shutdown_forced','connections':1})
         self.assertEqual(one(self.db,"SELECT connections FROM loss_records WHERE id='loss'")['connections'],1)
+        self.assertEqual(run(self.db,'shutdown',{'event_id':'forced-again','op':'shutdown','id':'forced-again','request':'request','uid':'u1','at':41,'loss_id':'loss-again'})['decision'],'shutdown_already_issued')
+        self.assertEqual(one(self.db,'SELECT COUNT(*) n FROM loss_records')['n'],1)
     def test_unknown_close_cannot_forge_drained_state(self):
         events=json.loads((ROOT/'fixtures'/'path.json').read_text(encoding='utf-8'))
         for event in events[:6]:run(self.db,event['command'],event['input'])

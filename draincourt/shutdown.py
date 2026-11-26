@@ -10,6 +10,8 @@ def handle(db,x):
         r=one(db,'SELECT * FROM termination_requests WHERE id=?',(x['request'],))
         grace=one(db,'SELECT * FROM grace_contracts WHERE request=?',(x['request'],))
         if not r or not grace or x['uid']!=r['uid']:return {'decision':'shutdown_denied'}
+        existing=one(db,'SELECT * FROM shutdown_orders WHERE request=?',(r['id'],))
+        if existing:return {'decision':'shutdown_already_issued','order':existing['id']}
         drained=one(db,"SELECT * FROM drain_cases WHERE request=? AND status='drained' ORDER BY at DESC LIMIT 1",(r['id'],))
         hook=one(db,'SELECT * FROM hook_receipts WHERE request=?',(r['id'],))
         safe=drained and hook and not active(db,r['id']) and x['at']<grace['expires']
