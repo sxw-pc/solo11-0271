@@ -1,0 +1,54 @@
+[
+  {
+    "command": "routes",
+    "input": {
+      "op": "observe",
+      "id": "base",
+      "event_id": "base",
+      "service": "checkout",
+      "name": "base",
+      "manager": "release-team",
+      "method": "*",
+      "prefix": "/pay",
+      "target": "current"
+    }
+  },
+  {
+    "command": "routes",
+    "input": {
+      "op": "observe",
+      "id": "ledger",
+      "event_id": "ledger",
+      "service": "checkout",
+      "name": "ledger",
+      "manager": "ledger-team",
+      "method": "GET",
+      "prefix": "/pay/ledger",
+      "target": "idempotent-ledger"
+    }
+  },
+  {
+    "command": "gatewaycheck",
+    "input": {
+      "op": "probe",
+      "id": "receipt",
+      "event_id": "receipt",
+      "service": "checkout",
+      "method": "GET",
+      "path": "/pay/ledger/receipt",
+      "asserted_by": "ledger-team"
+    }
+  },
+  {
+    "command": "gatewaycheck",
+    "input": {
+      "op": "probe",
+      "id": "payment",
+      "event_id": "payment",
+      "service": "checkout",
+      "method": "POST",
+      "path": "/pay/new",
+      "asserted_by": "release-team"
+    }
+  }
+]
