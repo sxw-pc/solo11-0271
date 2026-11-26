@@ -1,0 +1,86 @@
+[
+  {
+    "command": "retrybudget",
+    "input": {
+      "id": "w1",
+      "event_id": "w1",
+      "op": "epoch",
+      "service": "checkout",
+      "start": 0,
+      "stop": 10,
+      "capacity": 5
+    }
+  },
+  {
+    "command": "retrybudget",
+    "input": {
+      "id": "w2",
+      "event_id": "w2",
+      "op": "epoch",
+      "service": "checkout",
+      "start": 10,
+      "stop": 20,
+      "capacity": 5
+    }
+  },
+  {
+    "command": "retryattempt",
+    "input": {
+      "id": "uncertain",
+      "event_id": "uncertain",
+      "op": "dispatch",
+      "service": "checkout",
+      "parent": "original-a",
+      "at": 8,
+      "units": 4
+    }
+  },
+  {
+    "command": "retryattempt",
+    "input": {
+      "id": "other",
+      "event_id": "other",
+      "op": "dispatch",
+      "service": "checkout",
+      "parent": "original-b",
+      "at": 9,
+      "units": 1
+    }
+  },
+  {
+    "command": "retryattempt",
+    "input": {
+      "id": "other-result",
+      "event_id": "other-result",
+      "op": "result",
+      "service": "checkout",
+      "attempt": "other",
+      "at": 9,
+      "spent": 1
+    }
+  },
+  {
+    "command": "retryattempt",
+    "input": {
+      "id": "next",
+      "event_id": "next",
+      "op": "dispatch",
+      "service": "checkout",
+      "parent": "original-c",
+      "at": 10,
+      "units": 3
+    }
+  },
+  {
+    "command": "retryattempt",
+    "input": {
+      "id": "late-result",
+      "event_id": "late-result",
+      "op": "result",
+      "service": "checkout",
+      "attempt": "uncertain",
+      "at": 12,
+      "spent": 1
+    }
+  }
+]
