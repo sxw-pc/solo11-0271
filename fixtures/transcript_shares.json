@@ -1,0 +1,78 @@
+[
+  {
+    "command": "transcript",
+    "input": {
+      "op": "share",
+      "event_id": "share-contract-a",
+      "id": "contract-a-structure",
+      "incident": "one",
+      "mode": "structure",
+      "frames": ["first", "second"],
+      "destination": "shares/contract_a_structure.json"
+    }
+  },
+  {
+    "command": "transcript",
+    "input": {
+      "op": "share",
+      "event_id": "share-contract-b",
+      "id": "contract-b-correlation",
+      "incident": "one",
+      "mode": "correlation",
+      "frames": ["first", "second"],
+      "destination": "shares/contract_b_correlation.json"
+    }
+  },
+  {
+    "command": "transcript",
+    "input": {
+      "op": "share",
+      "event_id": "share-contract-b-third",
+      "id": "contract-b-third-event",
+      "incident": "two",
+      "mode": "correlation",
+      "frames": ["third"],
+      "destination": "shares/contract_b_third_event.json"
+    }
+  },
+  {
+    "command": "transcript",
+    "input": {
+      "op": "share-read",
+      "event_id": "read-contract-a",
+      "id": "contract-a-structure"
+    }
+  },
+  {
+    "command": "transcript",
+    "input": {
+      "op": "share-read",
+      "event_id": "read-contract-b",
+      "id": "contract-b-correlation"
+    }
+  },
+  {
+    "command": "transcript",
+    "input": {
+      "op": "share",
+      "event_id": "share-cross-event-broken",
+      "id": "broken-cross-event",
+      "incident": "one",
+      "mode": "correlation",
+      "frames": ["first", "third"],
+      "destination": "shares/must_not_be_written_cross.json"
+    }
+  },
+  {
+    "command": "transcript",
+    "input": {
+      "op": "share",
+      "event_id": "share-unknown-frame-broken",
+      "id": "broken-unknown-frame",
+      "incident": "one",
+      "mode": "structure",
+      "frames": ["first", "no-such-frame"],
+      "destination": "shares/must_not_be_written_unknown.json"
+    }
+  }
+]

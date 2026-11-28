@@ -14,3 +14,12 @@
 Local diagnostic frames are built from literals and slices of synthetic labelled
 values. The source recipe stays available independently of the rendered text.
 Run `python -m draincourt transcript --db trace.sqlite --fixture fixtures/transcript_fragments.json`.
+
+Share exports redact private synthetic spans according to the classification
+registered in `trace_values`; the reader only receives the written artifact.
+`mode=structure` replaces every private span with the same semantic-free
+placeholder `[遮盖]`, while `mode=correlation` issues opaque per-export markers
+valid only within that single authorization event. Broken frames (unknown
+source, out-of-bounds span, cross-event reference) abort the whole export and
+write no artifact; `op=share-read` re-verifies a completed export byte for byte.
+Run `python -m draincourt transcript --db trace.sqlite --fixture fixtures/transcript_shares.json`.
