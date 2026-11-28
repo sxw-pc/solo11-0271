@@ -1,0 +1,258 @@
+[
+  {
+    "command": "gatewaymerge",
+    "input": {
+      "op": "publish",
+      "event_id": "apply-cooperative",
+      "id": "receipts-v2",
+      "service": "checkout",
+      "change": {
+        "name": "receipts-v2",
+        "manager": "release-team",
+        "method": "*",
+        "prefix": "/pay/ledger/receipts",
+        "target": "v2"
+      },
+      "approval": {
+        "granted_by": "ledger-team"
+      }
+    }
+  },
+  {
+    "command": "gatewaymerge",
+    "input": {
+      "op": "publish",
+      "event_id": "apply-cooperative-duplicate",
+      "id": "receipts-v2",
+      "service": "checkout",
+      "change": {
+        "name": "receipts-v2",
+        "manager": "release-team",
+        "method": "*",
+        "prefix": "/pay/ledger/receipts",
+        "target": "v2"
+      },
+      "approval": {
+        "granted_by": "ledger-team"
+      }
+    }
+  },
+  {
+    "command": "gatewaymerge",
+    "input": {
+      "op": "publish",
+      "event_id": "apply-cooperative-conflict",
+      "id": "receipts-v2",
+      "service": "checkout",
+      "change": {
+        "name": "receipts-v2",
+        "manager": "release-team",
+        "method": "*",
+        "prefix": "/pay/ledger/receipts",
+        "target": "v3"
+      },
+      "approval": {
+        "granted_by": "ledger-team"
+      }
+    }
+  },
+  {
+    "command": "gatewaymerge",
+    "input": {
+      "op": "publish",
+      "event_id": "apply-unapproved",
+      "id": "receipts-v3",
+      "service": "checkout",
+      "change": {
+        "name": "receipts-v3",
+        "manager": "release-team",
+        "method": "*",
+        "prefix": "/pay/ledger/receipts/v3",
+        "target": "v3"
+      }
+    }
+  },
+  {
+    "command": "routes",
+    "input": {
+      "op": "resolve",
+      "event_id": "resolve-a-post-receipts",
+      "service": "checkout",
+      "method": "POST",
+      "path": "/pay/ledger/receipts/42"
+    }
+  },
+  {
+    "command": "routes",
+    "input": {
+      "op": "resolve",
+      "event_id": "resolve-a-get-receipts",
+      "service": "checkout",
+      "method": "GET",
+      "path": "/pay/ledger/receipts/42"
+    }
+  },
+  {
+    "command": "routes",
+    "input": {
+      "op": "resolve",
+      "event_id": "resolve-a-get-receipt",
+      "service": "checkout",
+      "method": "GET",
+      "path": "/pay/ledger/receipt"
+    }
+  },
+  {
+    "command": "routes",
+    "input": {
+      "op": "resolve",
+      "event_id": "resolve-a-get-v3",
+      "service": "checkout",
+      "method": "GET",
+      "path": "/pay/ledger/receipts/v3"
+    }
+  },
+  {
+    "command": "gatewaycheck",
+    "input": {
+      "op": "probe",
+      "event_id": "probe-a-get-receipts",
+      "id": "probe-a-get-receipts",
+      "service": "checkout",
+      "method": "GET",
+      "path": "/pay/ledger/receipts/42",
+      "asserted_by": "ledger-team"
+    }
+  },
+  {
+    "command": "gatewaycheck",
+    "input": {
+      "op": "probe",
+      "event_id": "probe-a-post-receipts",
+      "id": "probe-a-post-receipts",
+      "service": "checkout",
+      "method": "POST",
+      "path": "/pay/ledger/receipts/42",
+      "asserted_by": "release-team"
+    }
+  },
+  {
+    "command": "routes",
+    "input": {
+      "op": "observe",
+      "id": "base-handover",
+      "event_id": "base-handover",
+      "service": "checkout-handover",
+      "name": "base",
+      "manager": "release-team",
+      "method": "*",
+      "prefix": "/pay",
+      "target": "current"
+    }
+  },
+  {
+    "command": "routes",
+    "input": {
+      "op": "observe",
+      "id": "ledger-handover",
+      "event_id": "ledger-handover",
+      "service": "checkout-handover",
+      "name": "ledger",
+      "manager": "ledger-team",
+      "method": "GET",
+      "prefix": "/pay/ledger",
+      "target": "idempotent-ledger"
+    }
+  },
+  {
+    "command": "gatewaycheck",
+    "input": {
+      "op": "probe",
+      "event_id": "receipt-handover",
+      "id": "receipt-handover",
+      "service": "checkout-handover",
+      "method": "GET",
+      "path": "/pay/ledger/receipt",
+      "asserted_by": "ledger-team"
+    }
+  },
+  {
+    "command": "gatewaymerge",
+    "input": {
+      "op": "publish",
+      "event_id": "apply-handover",
+      "id": "receipts-v2",
+      "service": "checkout-handover",
+      "change": {
+        "name": "receipts-v2",
+        "manager": "release-team",
+        "method": "*",
+        "prefix": "/pay/ledger/receipts",
+        "target": "v2"
+      },
+      "approval": {
+        "granted_by": "ledger-team",
+        "handover": [
+          {
+            "method": "GET",
+            "prefix": "/pay/ledger/receipts"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "command": "routes",
+    "input": {
+      "op": "resolve",
+      "event_id": "resolve-b-get-receipts",
+      "service": "checkout-handover",
+      "method": "GET",
+      "path": "/pay/ledger/receipts/42"
+    }
+  },
+  {
+    "command": "routes",
+    "input": {
+      "op": "resolve",
+      "event_id": "resolve-b-post-receipts",
+      "service": "checkout-handover",
+      "method": "POST",
+      "path": "/pay/ledger/receipts/42"
+    }
+  },
+  {
+    "command": "routes",
+    "input": {
+      "op": "resolve",
+      "event_id": "resolve-b-get-receipt",
+      "service": "checkout-handover",
+      "method": "GET",
+      "path": "/pay/ledger/receipt"
+    }
+  },
+  {
+    "command": "gatewaycheck",
+    "input": {
+      "op": "probe",
+      "event_id": "probe-b-get-receipts",
+      "id": "probe-b-get-receipts",
+      "service": "checkout-handover",
+      "method": "GET",
+      "path": "/pay/ledger/receipts/42",
+      "asserted_by": "release-team"
+    }
+  },
+  {
+    "command": "gatewaycheck",
+    "input": {
+      "op": "probe",
+      "event_id": "probe-b-get-receipt",
+      "id": "probe-b-get-receipt",
+      "service": "checkout-handover",
+      "method": "GET",
+      "path": "/pay/ledger/receipt",
+      "asserted_by": "ledger-team"
+    }
+  }
+]

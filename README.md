@@ -15,3 +15,13 @@ The offline gateway simulator observes independently managed routes and stores
 actual request resolution from local probes. Longest prefix wins, followed by an
 exact method, then the name. No live traffic is generated.
 Run `python -m draincourt routes --db routes.sqlite --fixture fixtures/route_reconcile.json`.
+
+The gatewaymerge command applies a publisher change order locally. It plans with
+the same longest-prefix/exact-method/name priority as `routes`, requires the
+affected ledger manager's approval for any request region it does not own, and
+either honors an explicit handover scope (method + prefix, which must be wholly
+taken over by the new target) or generates protection routes that keep the
+pre-change resolution. Change route, protections and the publication marker
+commit in one transaction; stale probe evidence, name conflicts or missing
+approval keep the previous actual flow, and duplicate orders are no-ops.
+Run `python -m draincourt gatewaymerge --db routes.sqlite --fixture fixtures/route_reconcile_apply.json`.

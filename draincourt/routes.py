@@ -9,13 +9,24 @@ CREATE TABLE IF NOT EXISTS route_entries (
 """
 
 
-def direct(db, service, method, path):
-    candidates = [route for route in rows(db, 'SELECT * FROM route_entries WHERE service=? AND method IN (?,?)',
-                                         (service, method, '*')) if path.startswith(route['prefix'])]
+def choose(entries, method, path):
+    """Pick the winning entry with the actual priority semantics.
+
+    Longest literal prefix wins, then an exact method over '*', then the name.
+    Shared by runtime resolution and the publish merge so both judge request
+    ownership with the same rules.
+    """
+    candidates = [route for route in entries
+                  if route['method'] in (method, '*') and path.startswith(route['prefix'])]
     if not candidates:
         return None
-    chosen = min(candidates, key=lambda r: (-len(r['prefix']), r['method'] == '*', r['name']))
-    return chosen['target']
+    return min(candidates, key=lambda r: (-len(r['prefix']), r['method'] == '*', r['name']))
+
+
+def direct(db, service, method, path):
+    chosen = choose(rows(db, 'SELECT * FROM route_entries WHERE service=? AND method IN (?,?)',
+                         (service, method, '*')), method, path)
+    return chosen['target'] if chosen else None
 
 
 def handle(db, x):
