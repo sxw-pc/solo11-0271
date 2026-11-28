@@ -1,7 +1,7 @@
 """Observed preStop execution routes and maintenance holds."""
 import json
 
-from .store import one
+from .store import one, rows
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS clock_stages (
@@ -45,3 +45,72 @@ def handle(db, x):
         db.execute('INSERT INTO clock_delegations VALUES (?,?,?)', (stage['id'], x['route'], at))
         return {'decision': 'route_delegated'}
     return {'decision': 'unknown_operation'}
+
+
+MAX_COMPENSATION = 10
+
+
+def _merge(intervals):
+    """Union of half-open intervals so one moment is never counted twice."""
+    merged = []
+    for start, end in sorted(intervals):
+        if end <= start:
+            continue
+        if merged and start <= merged[-1][1]:
+            if end > merged[-1][1]:
+                merged[-1][1] = end
+        else:
+            merged.append([start, end])
+    return merged
+
+
+def _subtract(base, blocks):
+    """Half-open intervals of `base` not covered by the merged `blocks`."""
+    free = []
+    for start, end in base:
+        cursor = start
+        for block_start, block_end in blocks:
+            if block_end <= cursor or block_start >= end:
+                continue
+            if block_start > cursor:
+                free.append([cursor, min(block_start, end)])
+            cursor = max(cursor, block_end)
+            if cursor >= end:
+                break
+        if cursor < end:
+            free.append([cursor, end])
+    return free
+
+
+def compensation(db, request, at, expires):
+    """Platform-blocked preStop time for `request` as adjudicated at `at`.
+
+    Counts only moments inside the original grace window [0, expires) where
+    the stage had started, no valid completion receipt for the same request
+    and generation had been delivered yet, and every route activated by a
+    real delegation receipt was simultaneously under an observed maintenance
+    hold. Only maintenance and delegation receipts delivered by `at` take
+    part; ordinary workload stalls never do, and accumulation stops once the
+    hook completes even if the base deadline is still ahead. The total is
+    capped at MAX_COMPENSATION.
+    """
+    stage = one(db, 'SELECT * FROM clock_stages WHERE request=?', (request,))
+    if not stage or stage['at'] > at:
+        return {'compensation': 0, 'intervals': []}
+    hook = one(db, 'SELECT at FROM hook_receipts WHERE request=? AND at<=? ORDER BY at LIMIT 1',
+               (request, at))
+    window_end = min(expires, hook['at']) if hook else expires
+    if stage['at'] >= window_end:
+        return {'compensation': 0, 'intervals': []}
+    blocked = {}
+    for hold in rows(db, "SELECT route, start, end FROM clock_holds WHERE kind='maintenance' AND observed<=?",
+                     (at,)):
+        blocked.setdefault(hold['route'], []).append((hold['start'], hold['end']))
+    free = []
+    delegations = rows(db, 'SELECT route, at FROM clock_delegations WHERE stage=? AND at<=?', (stage['id'], at))
+    for delegation in delegations:
+        if delegation['at'] < window_end:
+            free += _subtract([[delegation['at'], window_end]], _merge(blocked.get(delegation['route'], [])))
+    intervals = _subtract([[stage['at'], window_end]], _merge(free))
+    total = sum(end - start for start, end in intervals)
+    return {'compensation': min(MAX_COMPENSATION, total), 'intervals': intervals}

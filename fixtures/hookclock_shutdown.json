@@ -1,0 +1,91 @@
+[
+  {
+    "command": "shutdown",
+    "input": {
+      "event_id": "shutdown-wait-44",
+      "op": "shutdown",
+      "id": "shutdown-b",
+      "request": "request",
+      "uid": "u1",
+      "at": 44,
+      "policy": "compensate",
+      "loss_id": "loss-b"
+    }
+  },
+  {
+    "command": "shutdown",
+    "input": {
+      "event_id": "shutdown-wait-45",
+      "op": "shutdown",
+      "id": "shutdown-b-45",
+      "request": "request",
+      "uid": "u1",
+      "at": 45,
+      "policy": "compensate",
+      "loss_id": "loss-b-45"
+    }
+  },
+  {
+    "command": "shutdown",
+    "input": {
+      "event_id": "shutdown-forced-46",
+      "op": "shutdown",
+      "id": "shutdown-b-46",
+      "request": "request",
+      "uid": "u1",
+      "at": 46,
+      "policy": "compensate",
+      "loss_id": "loss-b"
+    }
+  },
+  {
+    "command": "shutdown",
+    "input": {
+      "event_id": "shutdown-duplicate-47",
+      "op": "shutdown",
+      "id": "shutdown-b-47",
+      "request": "request",
+      "uid": "u1",
+      "at": 47,
+      "policy": "compensate",
+      "loss_id": "loss-b-47"
+    }
+  },
+  {
+    "command": "hookclock",
+    "input": {
+      "event_id": "late-maintenance",
+      "op": "hold",
+      "id": "late-maintenance",
+      "at": 48,
+      "route": "primary",
+      "start": 14,
+      "end": 16,
+      "kind": "maintenance"
+    }
+  },
+  {
+    "command": "shutdown",
+    "input": {
+      "event_id": "shutdown-after-late-evidence",
+      "op": "shutdown",
+      "id": "shutdown-b-48",
+      "request": "request",
+      "uid": "u1",
+      "at": 48,
+      "policy": "compensate",
+      "loss_id": "loss-b-48"
+    }
+  },
+  {
+    "command": "shutdown",
+    "input": {
+      "event_id": "exit",
+      "op": "exit-ack",
+      "id": "exit-b",
+      "order": "shutdown-b-46",
+      "uid": "u1",
+      "at": 49
+    }
+  }
+]
