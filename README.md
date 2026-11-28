@@ -14,3 +14,18 @@
 The offline clock inventory keeps per-node clock-offset bounds and local observations
 of agent message exchanges. Milestones retain their original source and local time.
 Run `python -m draincourt nodeclock --db incident.sqlite --fixture fixtures/clock_incident.json`.
+
+Event-order proofs are `milestone` events with `op: prove_order` over two milestones of
+one incident. Only the exchanges listed in `authorized_exchanges` constrain the proof;
+all other observed exchanges are reported as `ignored_exchanges` and never enter the
+extremal evidence. Every authorized exchange is reduced to difference constraints on one
+shared set of node offsets (`0 <= received-sent <= max_delay` after offset conversion),
+solved jointly with each node's static range. The export gives the minimum and maximum
+of `global(b) - global(a)`, one jointly feasible offset assignment attaining each
+attainable endpoint (with per-edge checks), and a verdict: `proven_after`,
+`proven_before`, `proven_simultaneous`, or `order_undecided` whenever zero or both signs
+remain possible. Contradictory calibrations return `calibration_conflict` with the
+exchanges on the negative cycle instead of any ordering verdict.
+Run `python -m draincourt milestone --db incident.sqlite --fixture fixtures/clock_order_proofs.json`
+after the incident fixture; the static-only and relay-authorized contracts are both
+reproduced unchanged by `replay`.

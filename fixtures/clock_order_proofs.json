@@ -1,0 +1,26 @@
+[
+  {
+    "command": "milestone",
+    "input": {
+      "op": "prove_order",
+      "id": "contract-a",
+      "event_id": "contract-a",
+      "incident": "node-drain",
+      "a": "a",
+      "b": "b",
+      "authorized_exchanges": []
+    }
+  },
+  {
+    "command": "milestone",
+    "input": {
+      "op": "prove_order",
+      "id": "contract-b",
+      "event_id": "contract-b",
+      "incident": "node-drain",
+      "a": "a",
+      "b": "b",
+      "authorized_exchanges": ["e-to-r", "r-to-n"]
+    }
+  }
+]
